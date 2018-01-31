@@ -10,7 +10,7 @@ args = parser.parse_args()
 def run():
     try:
         server = Server(args.dir if args.dir else '/tmp/dirdb')
-
+        server.setDaemon(True)
         server.start()
 
         while True:

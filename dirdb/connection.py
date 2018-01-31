@@ -1,4 +1,8 @@
 from threading import Thread
+import json
+
+
+MSGLEN = 2048 * 7
 
 
 class Connection(Thread):
@@ -10,5 +14,15 @@ class Connection(Thread):
         self.server = server
 
     def run(self):
-        # start reading incoming data from socket
-        pass
+        while True:
+            incoming = self.socket.recv(MSGLEN)
+
+            try:
+                data = json.loads(incoming)
+            except ValueError:
+                self.socket.close()
+                self.socket = None
+
+                continue
+
+            print(data)
