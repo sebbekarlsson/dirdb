@@ -1,6 +1,8 @@
 # dirdb
 > Document database with built-in schema handler
 
+> A work in progress __do not use this now__
+
 ## Installing
 
     python setup.py install
