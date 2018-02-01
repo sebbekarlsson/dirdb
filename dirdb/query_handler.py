@@ -17,6 +17,8 @@ class QueryHandler(object):
         except Exception:
             return json.dumps({'error': 'parse error'})
 
+        # Handle graphql queries here ...
+
         return json.dumps({'data': str(parsed)})
 
     def db_exists(self, db):
@@ -25,9 +27,12 @@ class QueryHandler(object):
     def create_db(self, db):
         return os.mkdir(os.path.join(self.base_dir, db))
 
-    def save_document(self, db, name, document):
+    def save_document(self, db, query):
         if not self.db_exists(db):
             self.create_db(db)
+
+        name = 'temp'  # should be parsed from query
+        document = {}  # should be parsed from query
 
         filepath = os.path.join(self.base_dir, db, name + '.json')
 
@@ -51,11 +56,13 @@ class QueryHandler(object):
             _file.write(json.dumps(data))
         _file.close()
 
-    def update_document(self, db, query, document):
+    def update_document(self, db, query):
+        # does not do anythin right now
         current = self.find_document(query)
         print(current)
 
     def delete_document(self, db, query):
+        # does not do anythin right now
         current = self.find_document(query)
         print(current)
 
