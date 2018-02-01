@@ -1,9 +1,7 @@
+from dirdb.constants import MSGLEN
 from threading import Thread
 import socket
 import json
-
-
-MSGLEN = 2048 * 7
 
 
 class Client(Thread):
