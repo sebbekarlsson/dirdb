@@ -1,4 +1,5 @@
 from dirdb.server import Server
+from dirdb.client import Client
 import argparse
 
 
@@ -17,3 +18,15 @@ def run():
             server.join(1)
     except KeyboardInterrupt:
         server.killed = True
+
+
+def run_client():
+    try:
+        client = Client()
+        client.setDaemon(True)
+        client.start()
+
+        while True:
+            client.join(1)
+    except KeyboardInterrupt:
+        client.killed = True

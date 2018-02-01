@@ -12,7 +12,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "dirdb = dirdb.bin:run"
+            'dirdb = dirdb.bin:run',
+            'dirdb-client = dirdb.bin:run_client'
         ]
     }
 )

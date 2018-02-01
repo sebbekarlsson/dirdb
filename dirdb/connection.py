@@ -25,4 +25,22 @@ class Connection(Thread):
 
                 continue
 
+            if '$name' not in data:
+                self.socket.send(json.dumps({'ok': False}))
+                continue
+
+            if '$db' not in data:
+                self.socket.send(json.dumps({'ok': False}))
+                continue
+
+            if '$set' not in data:
+                # query.type == 'save'
+
+                name = data['$name']
+                db = data['$db']
+
+                self.server.save_document(db, name, data)
+
+                self.socket.send(json.dumps({'ok': True}))
+
             print(data)
