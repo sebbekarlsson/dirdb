@@ -57,12 +57,12 @@ class QueryHandler(object):
         _file.close()
 
     def update_document(self, db, query):
-        # does not do anythin right now
+        # does not do anything right now
         current = self.find_document(query)
         print(current)
 
     def delete_document(self, db, query):
-        # does not do anythin right now
+        # does not do anything right now
         current = self.find_document(query)
         print(current)
 
