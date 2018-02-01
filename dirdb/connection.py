@@ -20,8 +20,7 @@ class Connection(Thread):
             try:
                 data = json.loads(incoming)
             except ValueError:
-                self.socket.close()
-                self.socket = None
+                self.socket.send(json.dumps({'ok': False, 'msg': 'parse'}))
 
                 continue
 

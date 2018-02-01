@@ -17,17 +17,25 @@ class Server(Thread):
         self.host = host
         self.port = port
 
+        if not os.path.isdir(self.base_dir):
+            os.mkdir(self.base_dir)
+
     def db_exists(self, db):
         return os.path.isdir(os.path.join(self.base_dir, db))
 
     def create_db(self, db):
-        return os.path.mkdir(os.path.join(self.base_dir, db))
+        return os.mkdir(os.path.join(self.base_dir, db))
 
     def save_document(self, db, name, document):
         if not self.db_exists(db):
             self.create_db(db)
 
         filepath = os.path.join(self.base_dir, db, name + '.json')
+
+        if not os.path.isfile(filepath):
+            with open(filepath, 'w+') as _file:
+                _file.write('')
+            _file.close()
 
         filecontents = ''
         with open(filepath) as _file:
@@ -40,7 +48,7 @@ class Server(Thread):
 
         data.append(document)
 
-        with open(filepath) as _file:
+        with open(filepath, 'w+') as _file:
             _file.write(json.dumps(data))
         _file.close()
 
