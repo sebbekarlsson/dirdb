@@ -18,6 +18,9 @@ class QueryHandler(object):
             return json.dumps({'error': 'parse error'})
 
         # Handle graphql queries here ...
+        # if it is a mutation: self.save_document or self.update_document
+        # if it is a deletion: self.delete_document
+        # if it is a search query: self.find_document
 
         return json.dumps({'data': str(parsed)})
 
