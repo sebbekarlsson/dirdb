@@ -61,7 +61,15 @@ class Server(Thread):
         print(current)
 
     def find_document(self, db, query):
-        pass
+        filepath = os.path.join(self.base_dir, db, query['$name'] + '.json')
+
+        contents = ''
+        with open(filepath, 'r+') as _file:
+            contents = _file.read()
+        _file.close()
+        contents = '[]' if not contents else contents
+
+        return json.loads(contents)
 
     def run(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

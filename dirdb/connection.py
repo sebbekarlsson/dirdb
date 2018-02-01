@@ -32,14 +32,17 @@ class Connection(Thread):
                 self.socket.send(json.dumps({'ok': False}))
                 continue
 
-            if '$set' not in data:
-                # query.type == 'save'
+            db = data['$db']
+            name = data['$name']
 
-                name = data['$name']
-                db = data['$db']
+            if '$set' not in data and '$find' not in data:
+                # query.type == 'save'
 
                 self.server.save_document(db, name, data)
 
                 self.socket.send(json.dumps({'ok': True}))
+            elif '$find' in data:
+                objects = self.server.find_document(db, data)
+                self.socket.send(json.dumps(objects))
 
             print(data)
