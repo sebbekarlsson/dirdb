@@ -17,8 +17,6 @@ class QueryHandler(object):
         except Exception:
             return json.dumps({'error': 'parse error'})
 
-        import pdb; pdb.set_trace()
-
         return json.dumps({'data': str(parsed)})
 
     def db_exists(self, db):

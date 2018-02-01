@@ -1,5 +1,5 @@
 # dirdb
-> Document database with built-in schema handler
+> Document database with built-in graphql
 
 > A work in progress __do not use this now__
 
