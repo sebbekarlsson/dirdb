@@ -5,7 +5,7 @@ setup(
     name='dirdb',
     version='1.0',
     install_requires=[
-        ''
+        'graphql-py'
     ],
     packages=[
         'dirdb'

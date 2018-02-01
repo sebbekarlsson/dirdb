@@ -1,6 +1,5 @@
 from dirdb.constants import MSGLEN
 from threading import Thread
-import json
 
 
 class Connection(Thread):
@@ -15,35 +14,5 @@ class Connection(Thread):
         while True:
             incoming = self.socket.recv(MSGLEN)
 
-            try:
-                data = json.loads(incoming)
-            except ValueError:
-                try:
-                    self.socket.send(json.dumps({'ok': False, 'msg': 'parse'}))
-                except Exception:
-                    return
-
-                continue
-
-            if '$name' not in data:
-                self.socket.send(json.dumps({'ok': False}))
-                continue
-
-            if '$db' not in data:
-                self.socket.send(json.dumps({'ok': False}))
-                continue
-
-            db = data['$db']
-            name = data['$name']
-
-            if '$set' not in data and '$find' not in data:
-                # query.type == 'save'
-
-                self.server.save_document(db, name, data)
-
-                self.socket.send(json.dumps({'ok': True}))
-            elif '$find' in data:
-                objects = self.server.find_document(db, data)
-                self.socket.send(json.dumps(objects))
-
-            print(data)
+            response = self.server.query_handler.execute(incoming)
+            self.socket.send(response)
